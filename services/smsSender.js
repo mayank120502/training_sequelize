@@ -1,14 +1,19 @@
-const { accountSid , authToken , sendersPhone} = require('../util/constants');
+const { accountSid, authToken, sendersPhone } = require('../util/constants');
 
-const client = require('twilio')(accountSid , authToken);
+const client = require('twilio')(accountSid, authToken);
 
-const sendSMS = (to , body) => {
+const sendSMS = async (to, body) => {
     let obj = {
-        from:sendersPhone,
+        from: sendersPhone,
         to,
         body,
     };
-    client.messages.create(obj);
+    try {
+        await client.messages.create(obj);
+    }
+    catch (err) {
+        console.log(err.message);
+    }
 }
 
 module.exports = {
