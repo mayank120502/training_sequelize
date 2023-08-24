@@ -1,9 +1,12 @@
 const Joi = require('joi');
 
-const loginSchema = Joi.object({
-    email : Joi.string().required(),
+let loginSchema = Joi.object({
+    email : Joi.string(),
+    phone : Joi.string(),
     password : Joi.string().min(8).max(12).required(),
 });
+
+loginSchema = loginSchema.or('email' , 'phone');
 
 const logoutSchema = Joi.object({
     email : Joi.string().required(),
@@ -14,6 +17,7 @@ const sendOTPSchema = Joi.object({
 const signUpSchema = Joi.object({
     name : Joi.string().min(5).max(15).required(),
     email : Joi.string().required(),
+    phone : Joi.string().required(),
     password : Joi.string().min(8).max(12).required(),
 });
 const verifyOTPSchema = Joi.object({

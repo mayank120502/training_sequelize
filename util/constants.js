@@ -1,12 +1,12 @@
 require('dotenv').config()
 
 // const secretKey = '1234';
-// const saltRounds = 10;
+const saltRounds = 10;
 // const emailForNodemailer = 'aasthabhard21@gmail.com';
 // const passwordForNodemailer = 'axsfhlbvyidvfjmj';
 
 const secretKey = process.env.SECRET_KEY;
-const saltRounds = process.env.SALTROUNDS;
+// const saltRounds = process.env.SALTROUNDS;
 const emailForNodemailer = process.env.EMAIL_NM;
 const passwordForNodemailer = process.env.PASSWORD_NM;
 const accountSid = process.env.ACCOUNT_SID;
