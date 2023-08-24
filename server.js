@@ -5,6 +5,9 @@ require('dotenv').config();
 
 const app = express();
 const Port = process.env.PORT;
+// // to be used for creating HTTPS server - uncomment when SSL certs are added
+// const fs = require('fs');
+// const https = require('https');
 
 app.use(express.json());
 app.use(router);
