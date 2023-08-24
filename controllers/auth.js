@@ -64,7 +64,7 @@ const logoutController1 = async (req, res) => {
     try {
         let bearer = req.headers['authorization'];
         let token = "";
-        if (bearer) {
+        if (bearer) { 
             bearer = bearer.split(' ');
             if (bearer.length == 2) {
                 token = bearer[1];
