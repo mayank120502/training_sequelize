@@ -5,7 +5,9 @@ const {
 
 const {
     createPostController ,
-    viewPostController
+    viewPostController,
+    editPostController,
+    getAllSoftDeleted,
 } = require('../../controllers/post');
 
 const {
@@ -17,5 +19,7 @@ const postRoute = express.Router();
 
 postRoute.post('/post' , requestValidator(schema.postSchema) , checkBearer , createPostController);
 postRoute.get('/post' , checkBearer , viewPostController);
+postRoute.patch('/post' , checkBearer , editPostController);
+postRoute.get('/getSoft' , getAllSoftDeleted);
 
 module.exports = postRoute;

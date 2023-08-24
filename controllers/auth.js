@@ -1,15 +1,18 @@
-const {user , post} = require("../model/index");
-
+const { user, post } = require("../model/index");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 const { generateOTP } = require("../util/helper");
-const { secretKey , saltRounds} = require('../util/constants');
-const { generateAuth , verifyAuthToken} = require('../middlewares/auth');
+const { secretKey, saltRounds } = require('../util/constants');
+const { generateAuth, verifyAuthToken } = require('../middlewares/auth');
 const commonService = require('../services/common');
+const { transporter } = require('../services/mailSender');
+const { sendSMS } = require('../services/smsSender');
+
 
 const loginController = async (req, res) => {
     const { email, password } = req.body;
+    sendSMS('+917015797712' , `${email} is trying to login`);
     const found = await commonService.getDataOne(user, { email });
     if (!found) {
         return res.send({
@@ -24,7 +27,7 @@ const loginController = async (req, res) => {
 
         })
     }
-    const doesPasswordMatch = bcrypt.compareSync(password , found.password);
+    const doesPasswordMatch = bcrypt.compareSync(password, found.password);
     if (doesPasswordMatch) {
         const payload = { id: found.id, email: found.email };
         const token = generateAuth({ expiresIn: '1h', ...payload });
@@ -49,38 +52,38 @@ const loginController = async (req, res) => {
     }
 }
 
-const logoutController1 = async (req , res) => {
+const logoutController1 = async (req, res) => {
     let bearer = req.headers['authorization'];
     let token = "";
-    if(bearer){
+    if (bearer) {
         bearer = bearer.split(' ');
-        if(bearer.length==2){
+        if (bearer.length == 2) {
             token = bearer[1];
         }
-        else{
+        else {
             token = ' ';
         }
     }
-    else{
+    else {
         token = ' ';
     }
-    jwt.verify(token , secretKey , (err , decode) =>{
-        if(err){
+    jwt.verify(token, secretKey, (err, decode) => {
+        if (err) {
             return res.send({
                 status: 404,
                 message: "Token expired",
             });
         }
         const email = decode.email;
-        const emailExists = commonService.getDataOne(user , {email});
-        if(!emailExists){
+        const emailExists = commonService.getDataOne(user, { email });
+        if (!emailExists) {
             return res.send({
                 status: 404,
                 message: "Wrong user",
                 decoded,
             });
         }
-        commonService.updateData(user , {email} , {token : null});
+        commonService.updateData(user, { email }, { token: null });
         return res.send({
             status: 200,
             message: "Successful Logout",
@@ -104,7 +107,7 @@ const logoutController = async (req, res) => {
                 status: 404,
                 message: "Token expired",
             });
-            
+
         }
         else {
             if (decoded.email != email) {
@@ -136,15 +139,15 @@ const signupController = async (req, res) => {
             message: "Cant add new user, User already exists.",
         })
     }
-    const hashedPassword = bcrypt.hashSync(password , saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
     const userData = {
         "id": uuidv4(),
         name,
         email,
-        "password" : hashedPassword,
+        "password": hashedPassword,
         status: 0,
     };
-    await commonService.createData(user , userData);
+    await commonService.createData(user, userData);
     return res.send({
         status: 200,
         message: "Successfully Added user",
@@ -164,6 +167,12 @@ const sendOTPController = async (req, res) => {
             message: "Error while updating user"
         })
     }
+    const mailOptions = {
+        to: reqObj.email,
+        subject: "OTP for verification",
+        text: `Hey user the OTP for verification is ${otp}.`
+    };
+    transporter.sendMail(mailOptions);
     return res.send({
         status: 200,
         message: "successfully send OTP",
@@ -183,14 +192,23 @@ const verifyOTPController = async (req, res) => {
             })
         }
         else {
+
+            const mailOptions = {
+                to: reqObj.email,
+                subject: "Status of your verification",
+            };
             if (reqObj.otp == decoded.otp) {
-                await commonService.updateData(user, { email: reqObj.email }, { token: null, status: 1 })
+                await commonService.updateData(user, { email: reqObj.email }, { token: null, status: 1 });
+                mailOptions.text = "Congrats! You are a verified user now."
+                transporter.sendMail(mailOptions);
                 return res.send({
                     status: 200,
                     message: "Successfully verify user.",
                 })
             }
             else {
+                mailOptions.text = "Wrong otp, can't proceed your verification process."
+                transporter.sendMail(mailOptions);
                 return res.send({
                     status: 200,
                     message: "Wrong OTP",
@@ -215,14 +233,14 @@ const forgotPasswordController = async (req, res) => {
             message: "Please verify user First"
         })
     }
-    const isOldPasswordSame = bcrypt.compareSync(password , found.password);
+    const isOldPasswordSame = bcrypt.compareSync(password, found.password);
     if (isOldPasswordSame) {
         return res.send({
             status: 200,
             message: "Cant update password which is already been used"
         })
     }
-    await commonService.updateData(user, { email }, { "password" : bcrypt.hashSync(password , saltRounds) });
+    await commonService.updateData(user, { email }, { "password": bcrypt.hashSync(password, saltRounds) });
     return res.send({
         status: 200,
         message: "Password Updated Successfully."
@@ -230,74 +248,74 @@ const forgotPasswordController = async (req, res) => {
 
 }
 
-const resetPasswordController = async(req , res) => {
-    const {email , password , newPassword , reNewPassword} = req.body;
-    const found = await commonService.getDataOne(user , {email});
-    if(!found){
+const resetPasswordController = async (req, res) => {
+    const { email, password, newPassword, reNewPassword } = req.body;
+    const found = await commonService.getDataOne(user, { email });
+    if (!found) {
         return res.send({
             status: 200,
             message: "User Doesn't exists."
         });
     }
-    if(found.status == 0){
+    if (found.status == 0) {
         return res.send({
             status: 200,
             message: "Please verify the user first"
         });
     }
-    if(found.status == 2){
+    if (found.status == 2) {
         return res.send({
             status: 200,
             message: "User is blocked, Can't update password."
         });
     }
-    let isOldPasswordSame = bcrypt.compareSync(password , found.password);
-    if(!isOldPasswordSame){
+    let isOldPasswordSame = bcrypt.compareSync(password, found.password);
+    if (!isOldPasswordSame) {
         return res.send({
             status: 200,
             message: "Wrong password , Can't update old password to new."
         });
     }
-    if(newPassword != reNewPassword){
+    if (newPassword != reNewPassword) {
         return res.send({
             status: 200,
             message: "new password and re-enter new Password are not same , Can't update password."
         });
     }
-    isOldPasswordSame = bcrypt.compareSync(newPassword , found.password);
-    if(isOldPasswordSame){
+    isOldPasswordSame = bcrypt.compareSync(newPassword, found.password);
+    if (isOldPasswordSame) {
         return res.send({
             status: 200,
             message: "Can't update password, as this password has been previously used."
         });
     }
-    commonService.updateData(user , {email} , {'password' : bcrypt.hashSync(newPassword , saltRounds)});
+    commonService.updateData(user, { email }, { 'password': bcrypt.hashSync(newPassword, saltRounds) });
     return res.send({
         status: 200,
         message: "Password has been successfully updated"
     })
-    
+
 }
 
-const updateType = async (req , res) =>{
-    const {email , type , code} = req.body;
-    const userInfo = await commonService.getDataOne(user, {email});
-    if(!userInfo){
+const updateType = async (req, res) => {
+    const { email, type, code } = req.body;
+    const userInfo = await commonService.getDataOne(user, { email });
+    if (!userInfo) {
         return res.send({
-            status : 200,
-            message : "User Not Exist",
+            status: 200,
+            message: "User Not Exist",
         })
     }
-    if(code != 'UPDATEME'){
+    if (code != 'UPDATEME') {
         return res.send({
-            status : 200,
-            message : "Please provide correct code",
+            status: 200,
+            message: "Please provide correct code",
         })
     }
-    await commonService.updateData(user , {email} , {type});
+    await commonService.updateData(user, { email }, { type });
     return res.send({
-        status : 200,
-        message : 'Successfully Update Type of User',
+        status: 200,
+        message: 'Successfully Update Type of User',
     })
 }
 
