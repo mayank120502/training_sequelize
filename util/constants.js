@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 // const secretKey = '1234';
 const saltRounds = 10;
@@ -12,14 +12,15 @@ const passwordForNodemailer = process.env.PASSWORD_NM;
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const sendersPhone = process.env.SENDER_PHONE;
-
+const jwtExpiresIn = process.env.JWT_EXPIRESIN;
 
 module.exports = {
-    secretKey,
-    saltRounds,
-    emailForNodemailer,
-    passwordForNodemailer,
-    accountSid,
-    authToken,
-    sendersPhone
-}
+  secretKey,
+  saltRounds,
+  emailForNodemailer,
+  passwordForNodemailer,
+  accountSid,
+  authToken,
+  sendersPhone,
+  jwtExpiresIn,
+};
