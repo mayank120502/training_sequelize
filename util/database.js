@@ -22,7 +22,7 @@ sequelize.authenticate().then(() => {
 
 sequelize.sync({
   // force: true,
-  alter: true
+  alter: false
 }).then(() => {
   console.log('DB CREATED');
 }).catch((err) => {
