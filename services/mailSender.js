@@ -1,25 +1,24 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const {
-    emailForNodemailer,
-    passwordForNodemailer,
+  emailForNodemailer,
+  passwordForNodemailer
 } = require('../util/constants');
 // const { ConversationContextImpl } = require("twilio/lib/rest/conversations/v1/service/conversation");
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        user: emailForNodemailer,
-        pass: passwordForNodemailer,
-    }
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: emailForNodemailer,
+    pass: passwordForNodemailer
+  }
 });
 const mailOptions = {
-    from: 'aasthabhard21@gmail.com',
-    to: 'mayankjain125mj@gmail.com',
-    subject: 'OTP to verify your account',
-    text: 'That was easy!'
+  from: 'aasthabhard21@gmail.com',
+  to: 'mayankjain125mj@gmail.com',
+  subject: 'OTP to verify your account',
+  text: 'That was easy!'
 };
-
 
 // transporter.sendMail(mailOptions, (err, info) => {
 //     if (err) {
@@ -31,5 +30,5 @@ const mailOptions = {
 // });
 
 module.exports = {
-    transporter,
-}
+  transporter
+};

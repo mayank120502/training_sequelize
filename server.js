@@ -3,7 +3,7 @@ const router = require('./routes');
 require('dotenv').config();
 const swagger = require('./swagger');
 const app = express();
-const Port = process.env.PORT;
+const Port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(router);
