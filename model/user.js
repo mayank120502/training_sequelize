@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const Sequelize = require('sequelize');
 const { sequelize } = require('../util/database.js');
 
@@ -5,16 +6,17 @@ const user = sequelize.define('user', {
   id: {
     type: Sequelize.UUID,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
+    defaultValue: Sequelize.UUIDV4,
   },
   name: {
     type: Sequelize.STRING(30),
-    defaultValue: 'Person'
+    defaultValue: 'Person',
   },
   email: {
     type: Sequelize.STRING(30),
     allowNull: false,
-    unique: true
+    unique: true,
   },
   phone: {
     type: Sequelize.STRING(20),

@@ -3,7 +3,7 @@ const {
     emailForNodemailer,
     passwordForNodemailer,
 } = require('../util/constants');
-const { ConversationContextImpl } = require("twilio/lib/rest/conversations/v1/service/conversation");
+// const { ConversationContextImpl } = require("twilio/lib/rest/conversations/v1/service/conversation");
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,

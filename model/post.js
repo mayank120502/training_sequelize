@@ -5,7 +5,7 @@ const post = sequelize.define('post', {
     type: Sequelize.UUID,
     allowNull: false,
     primaryKey: true,
-    defaultValue: sequelize.fn('uuid_generate_v4')
+    defaultValue: Sequelize.UUIDV4
   },
   title: {
     type: Sequelize.STRING(30),

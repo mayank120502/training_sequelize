@@ -9,6 +9,13 @@ app.use(express.json());
 app.use(router);
 app.use(swagger);
 
+app.get('/', (req, res) => {
+  return res.send({
+    status: 200,
+    healthy: true
+  });
+});
+
 app.listen(Port, (err) => {
   if (err) {
     console.log(err.message);

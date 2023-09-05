@@ -1,6 +1,5 @@
 const { user } = require('../model/index');
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
 const { generateOTP, generateAuth } = require('../util/helper');
 const { saltRounds, jwtExpiresIn } = require('../util/constants');
 const commonService = require('../services/common');
@@ -54,7 +53,7 @@ const signupController = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
-    const userData = { 'id': uuidv4(), name, email, phone, 'password': hashedPassword };
+    const userData = { name, email, phone, 'password': hashedPassword };
     const updateUser = await commonService.createData(user, userData);
     if (!updateUser) {
       return res.send(errorRes(400, 'Error while updating user !'));
