@@ -1,0 +1,1082 @@
+openapi: 3.0.0
+info:
+  title: Training
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:3000
+  variables: {}
+paths:
+  /auth/updateUser:
+    patch:
+      tags:
+      - Auth
+      summary: Update User
+      operationId: UpdateUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateUserRequest'
+              - example:
+                  name: test user
+            example:
+              name: test user
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /auth/getAll:
+    get:
+      tags:
+      - Auth
+      summary: Get All USers
+      operationId: GetAllUSers
+      parameters:
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 10
+      - name: offset
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/login:
+    patch:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  email: test1@gmail.com
+                  password: '123456789'
+            example:
+              email: test1@gmail.com
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /auth/logout:
+    patch:
+      tags:
+      - Auth
+      summary: Logout
+      operationId: Logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /auth/signup:
+    post:
+      tags:
+      - Auth
+      summary: Signup
+      operationId: Signup
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/SignupRequest'
+              - example:
+                  name: test user
+                  email: test12@gmail.com
+                  phone: '1231118803'
+                  password: '123456789'
+            example:
+              name: test user
+              email: test12@gmail.com
+              phone: '1231118803'
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/sendOTP:
+    patch:
+      tags:
+      - Auth
+      summary: SendOTP
+      operationId: SendOTP
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/SendOTPRequest'
+              - example:
+                  email: test124@gmail.com
+            example:
+              email: test124@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/verifyOTP:
+    patch:
+      tags:
+      - Auth
+      summary: VerifyOTP
+      operationId: VerifyOTP
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/VerifyOTPRequest'
+              - example:
+                  otp: '250614'
+            example:
+              otp: '250614'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /auth/forgotPassword:
+    patch:
+      tags:
+      - Auth
+      summary: ForgotPassword
+      operationId: ForgotPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ForgotPasswordRequest'
+              - example:
+                  email: mayankjain125mj@gmail.com
+                  password: '123456789'
+            example:
+              email: mayankjain125mj@gmail.com
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/resetPassword:
+    patch:
+      tags:
+      - Auth
+      summary: ResetPassword
+      operationId: ResetPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ResetPasswordRequest'
+              - example:
+                  password: '12345678'
+                  newPassword: '123456789'
+                  reNewPassword: '123456789'
+            example:
+              password: '12345678'
+              newPassword: '123456789'
+              reNewPassword: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /auth/updateType:
+    patch:
+      tags:
+      - Auth
+      summary: Update User Type (Code -> "UPDATEME")
+      operationId: UpdateUserType(Code->"UPDATEME")
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateUserTypeCode-UPDATEMERequest'
+              - example:
+                  type: '1'
+                  code: UPDATEME
+            example:
+              type: '1'
+              code: UPDATEME
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/editPost/b24041d2-c098-4f11-bb2b-5f3b93b5cc58:
+    patch:
+      tags:
+      - Post
+      summary: Edit post controller
+      operationId: Editpostcontroller
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/EditpostcontrollerRequest'
+              - example:
+                  title: post 11
+                  desc: post 11
+                  verification: '0'
+            example:
+              title: post 11
+              desc: post 11
+              verification: '0'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/viewPost:
+    get:
+      tags:
+      - Post
+      summary: get Posts
+      operationId: getPosts
+      parameters:
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 4
+      - name: offset
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/post:
+    post:
+      tags:
+      - Post
+      summary: Create Post
+      operationId: CreatePost
+      parameters:
+      - name: title
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: post 6
+      - name: desc
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: post 6
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding: {}
+            schema:
+              required:
+              - myFile
+              type: object
+              properties:
+                myFile:
+                  type: string
+                  format: binary
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/deleteAll:
+    delete:
+      tags:
+      - Post
+      summary: Delete All
+      operationId: DeleteAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/deleteOne:
+    delete:
+      tags:
+      - Post
+      summary: Delete One Post
+      operationId: DeleteOnePost
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/viewOne/d0116b92-0129-4e9f-8159-7b9f14dc573f:
+    get:
+      tags:
+      - Post
+      summary: View one post
+      operationId: Viewonepost
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /post/posts:
+    get:
+      tags:
+      - Post
+      summary: View posts of followed users
+      operationId: Viewpostsoffollowedusers
+      parameters:
+      - name: page
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 5
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /profile/following:
+    get:
+      tags:
+      - Profile
+      summary: Get user following
+      operationId: Getuserfollowing
+      parameters:
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 10
+      - name: offset
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      - name: orderBy
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: email
+      - name: order
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: DESC
+      - name: search
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: test
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /profile/follow:
+    post:
+      tags:
+      - Profile
+      summary: Follow user
+      operationId: Followuser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/FollowuserRequest'
+              - example:
+                  email: test2@gmail.com
+            example:
+              email: test2@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /profile/followers:
+    get:
+      tags:
+      - Profile
+      summary: Get user followers
+      operationId: Getuserfollowers
+      parameters:
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 10
+      - name: offset
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      - name: orderBy
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: createdAt
+      - name: order
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: DESC
+      - name: search
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: test
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/login:
+    patch:
+      tags:
+      - Admin
+      summary: Login
+      operationId: PatchLogin
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  email: test1@gmail.com
+                  password: '123456789'
+            example:
+              email: test1@gmail.com
+              password: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /admin/sendotp:
+    patch:
+      tags:
+      - Admin
+      summary: Sendotp
+      operationId: Sendotp
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/SendOTPRequest'
+              - example:
+                  email: test1@gmail.com
+            example:
+              email: test1@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /admin/verifyotp:
+    patch:
+      tags:
+      - Admin
+      summary: Verifyotp
+      operationId: Verifyotp
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/VerifyOTPRequest'
+              - example:
+                  otp: '634237'
+            example:
+              otp: '634237'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/changePassword:
+    patch:
+      tags:
+      - Admin
+      summary: Change Password
+      operationId: ChangePassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ChangePasswordRequest'
+              - example:
+                  password: '12345678'
+                  newPassword: '123456789'
+                  reNewPassword: '123456789'
+            example:
+              password: '12345678'
+              newPassword: '123456789'
+              reNewPassword: '123456789'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/getAllUser:
+    get:
+      tags:
+      - Admin
+      summary: Get All Users
+      operationId: GetAllUsers
+      parameters:
+      - name: page
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      - name: limit
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 20
+      - name: searchAttribute
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: name
+      - name: searchValue
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: test
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/updateStatus/d29ef959-8942-45e4-bfb8-e43c616eaf01:
+    patch:
+      tags:
+      - Admin
+      summary: Update Status
+      operationId: UpdateStatus
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateStatusRequest'
+              - example:
+                  status: '1'
+            example:
+              status: '1'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/logout:
+    patch:
+      tags:
+      - Admin
+      summary: Logout
+      operationId: PatchLogout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/removeUser/103e8e89-7fa4-485b-a107-6a1869f904d2:
+    patch:
+      tags:
+      - Admin
+      summary: Remove User
+      operationId: RemoveUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /admin/getUserInfo/7fd7c9b6-e547-4c81-aece-414b28b4a564:
+    get:
+      tags:
+      - Admin
+      summary: Get User Info
+      operationId: GetUserInfo
+      parameters:
+      - name: pageFollowers
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      - name: limitFollowers
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: pageFollowing
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      - name: limitFollowing
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 3
+      - name: pagePost
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 0
+      - name: limitPost
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 4
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: test user
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: test1@gmail.com
+        password: '123456789'
+    SignupRequest:
+      title: SignupRequest
+      required:
+      - name
+      - email
+      - phone
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+      example:
+        name: test user
+        email: test12@gmail.com
+        phone: '1231118803'
+        password: '123456789'
+    SendOTPRequest:
+      title: SendOTPRequest
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: test124@gmail.com
+    VerifyOTPRequest:
+      title: VerifyOTPRequest
+      required:
+      - otp
+      type: object
+      properties:
+        otp:
+          type: string
+      example:
+        otp: '250614'
+    ForgotPasswordRequest:
+      title: ForgotPasswordRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: mayankjain125mj@gmail.com
+        password: '123456789'
+    ResetPasswordRequest:
+      title: ResetPasswordRequest
+      required:
+      - password
+      - newPassword
+      - reNewPassword
+      type: object
+      properties:
+        password:
+          type: string
+        newPassword:
+          type: string
+        reNewPassword:
+          type: string
+      example:
+        password: '12345678'
+        newPassword: '123456789'
+        reNewPassword: '123456789'
+    UpdateUserTypeCode-UPDATEMERequest:
+      title: UpdateUserTypeCode-UPDATEMERequest
+      required:
+      - type
+      - code
+      type: object
+      properties:
+        type:
+          type: string
+        code:
+          type: string
+      example:
+        type: '1'
+        code: UPDATEME
+    EditpostcontrollerRequest:
+      title: EditpostcontrollerRequest
+      required:
+      - title
+      - desc
+      - verification
+      type: object
+      properties:
+        title:
+          type: string
+        desc:
+          type: string
+        verification:
+          type: string
+      example:
+        title: post 11
+        desc: post 11
+        verification: '0'
+    DeleteOnePostRequest:
+      title: DeleteOnePostRequest
+      required:
+      - post_id
+      type: object
+      properties:
+        post_id:
+          type: string
+      example:
+        post_id: d0116b92-0129-4e9f-8159-7b9f14dc573f
+    FollowuserRequest:
+      title: FollowuserRequest
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: test2@gmail.com
+    ChangePasswordRequest:
+      title: ChangePasswordRequest
+      required:
+      - password
+      - newPassword
+      - reNewPassword
+      type: object
+      properties:
+        password:
+          type: string
+        newPassword:
+          type: string
+        reNewPassword:
+          type: string
+      example:
+        password: '12345678'
+        newPassword: '123456789'
+        reNewPassword: '123456789'
+    UpdateStatusRequest:
+      title: UpdateStatusRequest
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: '1'
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+- name: Post
+- name: Profile
+- name: Admin
